@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Engine Concepts - Indexing Process</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        h1, h2 {
+            color: #2c3e50;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .code-output {
+            margin-top: 10px;
+            background-color: #e8f8f5;
+            padding: 10px;
+            border: 1px solid #2ecc71;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Practical Session: Concepts of Search Engine</h1>
+    <h2>Part 1: Indexing Process</h2>
+    <p>
+        Implement a basic indexing process aligned with the key concepts of search engine architecture. 
+        Below is a function that takes a list of documents (text strings) and creates an inverted index. 
+        The inverted index maps terms to the list of document IDs.
+    </p>
+
+    <h3>Documents:</h3>
+    <pre id="documents">
+{
+    "Article: Pandas Basics": "This article covers the basics of using Pandas in Python.",
+    "Tutorial: Data Visualization": "Learn about data visualization techniques with Python libraries.",
+    "Case Study: Sales Analysis": "Analyze sales data using Python for a real-world case study."
+}
+    </pre>
+
+    <h3>Code:</h3>
+    <pre>
+function createInvertedIndex(documents) {
+    const invertedIndex = {};
+    Object.entries(documents).forEach(([docID, text]) => {
+        const words = text.toLowerCase().replace(/[^\w\s]/g, '').split(/\s+/);
+        words.forEach(word => {
+            if (!invertedIndex[word]) {
+                invertedIndex[word] = [];
+            }
+            if (!invertedIndex[word].includes(docID)) {
+                invertedIndex[word].push(docID);
+            }
+        });
+    });
+    return invertedIndex;
+}
+
+const documents = {
+    "Article: Pandas Basics": "This article covers the basics of using Pandas in Python.",
+    "Tutorial: Data Visualization": "Learn about data visualization techniques with Python libraries.",
+    "Case Study: Sales Analysis": "Analyze sales data using Python for a real-world case study."
+};
+
+const invertedIndex = createInvertedIndex(documents);
+console.log(invertedIndex);
+    </pre>
+
+    <h3>Output:</h3>
+    <div class="code-output" id="output"></div>
+
+    <script>
+        function createInvertedIndex(documents) {
+            const invertedIndex = {};
+            Object.entries(documents).forEach(([docID, text]) => {
+                const words = text.toLowerCase().replace(/[^\w\s]/g, '').split(/\s+/);
+                words.forEach(word => {
+                    if (!invertedIndex[word]) {
+                        invertedIndex[word] = [];
+                    }
+                    if (!invertedIndex[word].includes(docID)) {
+                        invertedIndex[word].push(docID);
+                    }
+                });
+            });
+            return invertedIndex;
+        }
+
+        const documents = {
+            "Article: Pandas Basics": "This article covers the basics of using Pandas in Python.",
+            "Tutorial: Data Visualization": "Learn about data visualization techniques with Python libraries.",
+            "Case Study: Sales Analysis": "Analyze sales data using Python for a real-world case study."
+        };
+
+        const invertedIndex = createInvertedIndex(documents);
+
+        // Display the output on the page
+        const outputDiv = document.getElementById("output");
+        outputDiv.textContent = JSON.stringify(invertedIndex, null, 2);
+    </script>
+</body>
+</html>
